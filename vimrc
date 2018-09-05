@@ -20,10 +20,15 @@ set backspace=indent,eol,start
 set backup
 set undofile		" keep an undo file (undo changes after closing)
 set history=100		" keep 100 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set ruler	    	" show the cursor position all the time
+set showcmd		    " display incomplete commands
 set incsearch		" do incremental searching
 set hlsearch
+
+" indent settings
+set tabstop=4		" Show tabs as 4 spaces
+set shiftwidth=4	" tab inserts 4 spaces
+set expandtab
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
