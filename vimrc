@@ -1,41 +1,53 @@
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Local Maintainer: Michael Plesser
-" Last change:	2016 Mar 25
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+" Maintainer: Michael Plesser
 
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Change directories where swap, undo, ,and backup files are stored
+set directory^=$HOME/.vim/.swp//
+set undodir^=$HOME/.vim/.undo//
+set backupdir^=$HOME/.vim/.backup//
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set backup
+set backup          " Keep backups
 set undofile		" keep an undo file (undo changes after closing)
+
 set history=100		" keep 100 lines of command line history
+
+set number          " show line number
+set ttyfast         " faster scrolling
 set ruler	    	" show the cursor position all the time
+set scrolloff=5     " display 5 lines above/below the cursor when scrolling with a mouse.
+
 set showcmd		    " display incomplete commands
 set incsearch		" do incremental searching
-set hlsearch
+set hlsearch        " highlight searches
+set smartcase       " Only search for CAPS if search term is all CAPS, otherwise do BoTh
 
 " indent settings
-set tabstop=4		" Show tabs as 4 spaces
+set tabstop=4		" show tabs as 4 spaces
 set shiftwidth=4	" tab inserts 4 spaces
 set expandtab
 
+" Custom shenanigans
+"
+" Map ;->;, IE instead of :w->;w
+" One less keystroke, and never again type :W by mistake... 
+nnoremap ; :
+" If a line wraps and you move the cursor up/down, don't skip the wrapped line
+nnoremap j gj
+nnoremap k gk
+
+" Vim's auto indentation feature does not work properly with text copied from
+" outisde of Vim. Press the <F2> key to toggle paste mode on/off.
+nnoremap <F2> :set invpaste paste?<CR>
+imap <F2> <C-O>:set invpaste paste?<CR>
+set pastetoggle=<F2>
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -84,13 +96,6 @@ if has('langmap') && exists('+langnoremap')
   set langnoremap
 endif
 
-
-" Add optional packages.
-
-" The matchit plugin makes the % command work better, but it is not backwards
-" compatible.
-"packadd matchit
-
 " Add vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -100,11 +105,6 @@ endif
 
 " Change color scheme
 syntax enable
-set background=dark
+set background=light
 let g:solarized_termcolors=256
 colorscheme solarized
-
-" Change directories where swap, undo, ,and backup files are stored
-set directory^=$HOME/.vim/.swp//
-set undodir^=$HOME/.vim/.undo//
-set backupdir^=$HOME/.vim/.backup//
